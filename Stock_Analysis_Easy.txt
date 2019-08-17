@@ -1,0 +1,67 @@
+Sub Stock_analysis()
+
+'Set initial variable for holding stock ticker
+Dim ticker As String
+
+'Set an initial variable for holding volume total
+Dim volume_total As Double
+
+volume_total = 0
+
+Dim lr As Long
+   'For understanding LR = Last Row
+
+    lr = Cells(Rows.Count, 1).End(xlUp).Row
+
+    
+
+'Keep track of location for each credit card brand in summary table
+Dim Summary_Table_Row As Integer
+Summary_Table_Row = 2
+
+'Print titles on row one
+Cells(1, 9).Value = "Ticker"
+Cells(1, 10).Value = "Total Stock Volume"
+Range("J1").EntireColumn.AutoFit
+
+
+'Loop through all stock ticker data
+For i = 2 To lr
+
+
+    'Check to see if we are still in the same ticker name, if not
+    If Cells(i + 1, 1).Value <> Cells(i, 1) Then
+        
+    'Set the ticker name
+    ticker = Cells(i, 1).Value
+    
+    'Add to the volume total
+    volume_total = volume_total + Cells(i, 7).Value
+    
+    'Print the Ticker in the Summary Table
+    Range("I" & Summary_Table_Row).Value = ticker
+
+    'Print the volume total amount to the Summary Table
+    Range("J" & Summary_Table_Row).Value = volume_total
+    
+    'Add one to the summary_table_row
+    Summary_Table_Row = Summary_Table_Row + 1
+    
+    'Reset the volume_total
+    volume_total = 0
+
+  
+    
+    'If the cell immediately following a row is the same ticker
+    Else
+    
+    'Add to the volume_total
+        volume_total = volume_total + Cells(i, 7).Value
+       
+    
+    End If
+            
+Next i
+
+End Sub
+
